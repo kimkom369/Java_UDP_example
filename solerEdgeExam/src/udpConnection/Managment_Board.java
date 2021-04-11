@@ -64,13 +64,12 @@ public class Managment_Board {
 				ds = new DatagramSocket();
 				InetAddress ip = InetAddress.getLocalHost();
 				msg = "ON";
-				label.setText("Device Set:- " + msg);
-				while (true) {
+				
 				buf = msg.getBytes();
 				dp = new DatagramPacket(buf, buf.length, ip, 8080);
 				ds.send(dp);
 				
-				DatagramPacket dpReceiver = new DatagramPacket(buf, buf.length);
+				DatagramPacket dpReceiver = new DatagramPacket(buf, 0, buf.length);
 				ds.receive(dpReceiver);
 				
 				String msgReceived = new String(dpReceiver.getData(),0,dpReceiver.getLength());
@@ -80,9 +79,7 @@ public class Managment_Board {
 				if (msgReceived != null) {
 					System.out.println("Message:- " + msgReceived);
 					System.out.println("connection ended...");
-					break;
 				}
-			  }
 			} catch (IOException e1) {
 				System.out.println("Error has occured");
 				e1.printStackTrace();
@@ -99,14 +96,14 @@ public class Managment_Board {
 				InetAddress ip = InetAddress.getLocalHost();
 				msg = "INIT";
 				label.setText("Device Set:- " + msg);
-				while (true) {
+				
 				buf = msg.getBytes();
-				dp = new DatagramPacket(buf, buf.length, ip, 8080);
+				dp = new DatagramPacket(buf,0, buf.length, ip, 8080);
 				ds.send(dp);
 				
-				DatagramPacket dpReceiver = new DatagramPacket(buf, buf.length);
-				ds.receive(dpReceiver);
 				
+				DatagramPacket dpReceiver = new DatagramPacket(buf,0, buf.length);
+				ds.receive(dpReceiver);
 				String msgReceived = new String(dpReceiver.getData(),0,dpReceiver.getLength());
 				System.out.println("Power board sends:- " + msg);
 				label.setText("MODE:- " + msgReceived);
@@ -114,9 +111,8 @@ public class Managment_Board {
 				if (msgReceived != null) {
 					System.out.println("Message:- " + msgReceived);
 					System.out.println("connection ended...");
-					break;
 				}
-			  }
+			  
 			} catch (IOException e1) {
 				System.out.println("Error has occured");
 				e1.printStackTrace();
@@ -132,7 +128,6 @@ public class Managment_Board {
 				ds = new DatagramSocket();
 				InetAddress ip = InetAddress.getLocalHost();
 				msg = "STAT";
-				label.setText("Device Set:- " + msg);
 				while (true) {
 				buf = msg.getBytes();
 				dp = new DatagramPacket(buf, buf.length, ip, 8080);
